@@ -1,8 +1,6 @@
 package com.colossus.democalculator.service;
 
-import org.springframework.stereotype.Service;
-
-@Service
 public interface CalculatorService {
-    String calculateEasyTask(int salary, int vacation);
+    String calculateEasyTask(double salary, int vacation);
+    String calculateAdditionalTask(String startVacation, int days, double salary);
 }
