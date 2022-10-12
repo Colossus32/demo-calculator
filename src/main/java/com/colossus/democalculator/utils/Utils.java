@@ -17,4 +17,12 @@ public class Utils {
         if (!holidays.containsKey(month)) return false;
         else return new HashSet<>(holidays.get(month)).contains(day);
     }
+
+    public static double calculateCurrentMonthDaySalary(int year, int month, double salary){
+
+        int[] normalYear = new int[] {31,28,31,30,31,30,31,31,30,31,30,31};
+        int[] leapYear = new int[] {31,29,31,30,31,30,31,31,30,31,30,31};
+
+        return year % 4 == 0 ? salary / leapYear[month - 1] : salary / normalYear[month - 1];
+    }
 }

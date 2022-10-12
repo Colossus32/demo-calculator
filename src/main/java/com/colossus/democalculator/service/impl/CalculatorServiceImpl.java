@@ -14,45 +14,44 @@ import java.time.LocalDate;
 public class CalculatorServiceImpl implements CalculatorService {
 
     @Override
-    public String calculateEasyTask(double salary, int vacation) {
+    public String calculateEasyTask(double salary, int year, int month, int vacation) {
 
-        log.info("starting method calculateEasyTask");
-        if (salary < 0 || vacation <= 0) {
-            log.error("invalid arguments in calculateEasyTask " + this.getClass());
-            throw new IllegalArgumentException();
-        }
+        log.info("starting method calculateAdditionalTask");
+        if (salary < 0 || year < 1 || month < 1 || month > 12 || vacation < 0) throw new IllegalArgumentException();
+
         log.info("arguments are OK");
+        double result = Utils.calculateCurrentMonthDaySalary(year, month, salary) * vacation;
 
-        double result = salary / vacation;
         return String.valueOf(new DecimalFormat("#0.00").format(result));
     }
 
     @Override
-    public String calculateAdditionalTask(String startVacation, int days, double salary) {
+    public String calculateAdditionalTask(String vacation, int days, double salary) {
 
         log.info("starting method calculateAdditionalTask");
         if (days <= 0 || salary <= 0) {
             log.error("invalid arguments in calculateAdditionalTask " + this.getClass());
             throw new IllegalArgumentException();
         }
-        LocalDate date = LocalDate.parse(startVacation);
+        LocalDate date = LocalDate.parse(vacation);
 
         log.info("arguments are OK");
-        int vacationDays = 0;
+        double result = 0;
 
-        while(days > 0) {
+        while(days-- > 0) {
             DayOfWeek dayOfWeek = date.getDayOfWeek();
             int month = date.getMonthValue(); // 1-12
             int currentDay = date.getDayOfMonth(); //1-31
-            if (!dayOfWeek.equals(DayOfWeek.SATURDAY) && !dayOfWeek.equals(DayOfWeek.SUNDAY) && !Utils.checkHoliday(month,currentDay)) vacationDays++;
+            int currentYear = date.getYear();
+
+            if (!dayOfWeek.equals(DayOfWeek.SATURDAY) && !dayOfWeek.equals(DayOfWeek.SUNDAY) && !Utils.checkHoliday(month,currentDay)){
+                double currentMonthDaySalary = Utils.calculateCurrentMonthDaySalary(currentYear, month, salary);
+                result += currentMonthDaySalary;
+            }
 
             date = date.plusDays(1);
-            days--;
         }
 
-        if (vacationDays == 0) return "0.00";
-
-        double result = salary / vacationDays;
         return String.valueOf(new DecimalFormat("#0.00").format(result));
     }
 

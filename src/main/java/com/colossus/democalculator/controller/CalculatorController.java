@@ -15,17 +15,17 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class CalculatorController {
 
-    private final CalculatorServiceImpl service;
+    private final CalculatorService service;
 
     @GetMapping("/simple")
-    public String getMoney(@RequestParam Double salary, @RequestParam Integer vacation){
+    public String getMoneySimpleTask(@RequestParam Double salary, @RequestParam Integer year, @RequestParam Integer month, @RequestParam Integer vacation){
         log.info("request to /simple");
-        return service.calculateEasyTask(salary,vacation);
+        return service.calculateEasyTask(salary,year, month, vacation);
     }
 
     @GetMapping("/additional")
-    public String getMoneyAdditional(@RequestParam String startVacation,@RequestParam Integer days, @RequestParam Double salary ){
+    public String getMoneyAdditionalTask(@RequestParam String vacation, @RequestParam Integer days, @RequestParam Double salary ){
         log.info("request to /additional");
-        return service.calculateAdditionalTask(startVacation, days, salary);
+        return service.calculateAdditionalTask(vacation, days, salary);
     }
 }

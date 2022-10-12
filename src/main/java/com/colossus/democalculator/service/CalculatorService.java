@@ -1,6 +1,6 @@
 package com.colossus.democalculator.service;
 
 public interface CalculatorService {
-    String calculateEasyTask(double salary, int vacation);
-    String calculateAdditionalTask(String startVacation, int days, double salary);
+    String calculateEasyTask(double salary, int year, int month, int vacation);
+    String calculateAdditionalTask(String vacation, int days, double salary);
 }
