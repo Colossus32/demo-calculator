@@ -29,16 +29,15 @@ public class CalculatorServiceImpl implements CalculatorService {
     public String calculateAdditionalTask(String vacation, int days, double salary) {
 
         log.info("starting method calculateAdditionalTask");
-        if (days <= 0 || salary <= 0) {
-            log.error("invalid arguments in calculateAdditionalTask " + this.getClass());
-            throw new IllegalArgumentException();
-        }
-        LocalDate date = LocalDate.parse(vacation);
+        if (days <= 0 || salary <= 0) throw new IllegalArgumentException();
 
+        LocalDate date = LocalDate.parse(vacation);
         log.info("arguments are OK");
+
         double result = 0;
 
         while(days-- > 0) {
+
             DayOfWeek dayOfWeek = date.getDayOfWeek();
             int month = date.getMonthValue(); // 1-12
             int currentDay = date.getDayOfMonth(); //1-31
